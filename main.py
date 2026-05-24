@@ -29,16 +29,14 @@ def clean():
 
 if __name__ == '__main__':
     MODEL_NAME = 'mega'
-    
-    TICKS=[(T, T.lower()) for T in mega_ticks]
-    download_1M_5m(TICKS)
+    download_1M_5m(mega_ticks)
 
     # MODEL_NAME = '1d'
-    # download_1Y_1D()
+    # download_1Y_1D(mega_ticks)
 
     clean()
     train_model(MODEL_NAME)
     test_model(MODEL_NAME)
 
-    # for s in [sample.split('.')[0] for sample in os.listdir(TRAIN_SAMPLE_DIR)]:
-    #     benchmark(s)
+    for s in [sample.split('.')[0] for sample in os.listdir(TRAIN_SAMPLE_DIR)]:
+        benchmark(s)

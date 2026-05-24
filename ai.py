@@ -139,7 +139,7 @@ def dataframe_add_statistics(df: pd.DataFrame) -> pd.DataFrame:
     # Target
     # =========================
     TARGET_MOVE = 0.001
-    TARGET_SHIFT = 6
+    TARGET_SHIFT = 12
 
     df['future_return'] = df.Close.shift(-TARGET_SHIFT) / df.Close - 1
 
@@ -173,15 +173,7 @@ def save_results(y_test, future_returns, pred_proba, csv_sample):
     acc = np.mean(
         pred_class == y_test.values
     )
-
     error_rate = 1 - acc
-
-    print(
-        f"{csv_sample} | "
-        f"Accuracy: {acc*100:.2f}% | "
-        f"Error: {error_rate*100:.2f}%"
-    )
-
     report = classification_report(
         y_test,
         pred_class,
@@ -192,7 +184,13 @@ def save_results(y_test, future_returns, pred_proba, csv_sample):
         ]
     )
 
-    print(report)
+    
+    print(
+        f"{csv_sample} | "
+        f"Accuracy: {acc*100:.2f}% | "
+        f"Error: {error_rate*100:.2f}%\n",
+        report
+    )
 
     with open(f'{RESULT_DIR}/{csv_sample}.csv', 'w+') as res:
         res.write('future_return,pSELL,pHOLD,pBUY,target,predicted,confidence\n')
