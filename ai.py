@@ -6,14 +6,11 @@ import os
 from multiprocessing import Pool, cpu_count
 from xgboost import XGBClassifier
 from download_samples import assert_dir
-from backtest import TEST_SAMPLE_DIR
 from sklearn.metrics import classification_report
 from sklearn.utils.class_weight import compute_sample_weight
+from config import MODEL_DIR, TRAIN_SAMPLE_DIR, RESULT_DIR, TEST_SAMPLE_DIR, TARGET_SHIFT, TARGET
 
 TRAIN_TEST_SPLIT = 0.8
-MODEL_DIR = './models'
-RESULT_DIR = './results'
-TRAIN_SAMPLE_DIR = './samples/train'
 STATISTICS = [
     'dist_sma_10',
     'dist_sma_20',
@@ -33,8 +30,6 @@ STATISTICS = [
     'lag_return_3',
     'relative_volume'
 ]
-TARGET = 'target_ml'
-
 CLASS_MAP = {
     -1: 0,  # SELL
      0: 1,  # HOLD
@@ -139,7 +134,6 @@ def dataframe_add_statistics(df: pd.DataFrame) -> pd.DataFrame:
     # Target
     # =========================
     TARGET_MOVE = 0.001
-    TARGET_SHIFT = 12
 
     df['future_return'] = df.Close.shift(-TARGET_SHIFT) / df.Close - 1
 

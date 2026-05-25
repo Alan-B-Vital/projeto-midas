@@ -3,11 +3,7 @@ import os
 from multiprocessing import Pool, cpu_count
 
 from datetime import datetime, timedelta
-
-
-TRAIN_SAMPLE_DIR = './samples/train'
-TEST_SAMPLE_DIR = './samples/test'
-EXT = '.csv'
+from config import TRAIN_SAMPLE_DIR, TEST_SAMPLE_DIR
 
 def assert_dir(dir) -> None:
     if not os.path.exists(dir):
@@ -24,9 +20,9 @@ def d_5m_tick(tick: str):
     }
 
     df = yf.download(tick, start=date_train['start'], end=date_train['end'], interval='5m', multi_level_index=False)
-    df.to_csv(f'{TRAIN_SAMPLE_DIR}/{tick}_1M_5m{EXT}')
+    df.to_csv(f'{TRAIN_SAMPLE_DIR}/{tick}_1M_5m.csv')
     df = yf.download(tick, start=date_test['start'], end=date_test['end'], interval='5m', multi_level_index=False)
-    df.to_csv(f'{TEST_SAMPLE_DIR}/{tick}_1M_5m{EXT}')
+    df.to_csv(f'{TEST_SAMPLE_DIR}/{tick}_1M_5m.csv')
 
 def download_1M_5m(ticks: tuple) -> None:
     assert_dir(TRAIN_SAMPLE_DIR)
@@ -50,9 +46,9 @@ def d_1d_tick(tick: str):
     }
 
     df = yf.download(tick, start=date_train['start'], end=date_train['end'], interval='1d', multi_level_index=False)
-    df.to_csv(f'{TRAIN_SAMPLE_DIR}/{tick}_1Y_1D{EXT}')
+    df.to_csv(f'{TRAIN_SAMPLE_DIR}/{tick}_1Y_1D.csv')
     df = yf.download(tick, start=date_test['start'], end=date_test['end'], interval='1d', multi_level_index=False)
-    df.to_csv(f'{TEST_SAMPLE_DIR}/{tick}_1Y_1D{EXT}')
+    df.to_csv(f'{TEST_SAMPLE_DIR}/{tick}_1Y_1D.csv')
 
 def download_1Y_1D(ticks: tuple) -> None:
     assert_dir(TRAIN_SAMPLE_DIR)

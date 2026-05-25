@@ -2,4 +2,6 @@
 samples/
 results/
 models/
+dumps/
+dumps/
 __pycache__/
